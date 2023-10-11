@@ -1,16 +1,27 @@
-# This is a sample Python script.
+from flask import Flask, request, jsonify
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+app = Flask(__name__)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# @app.route("/")
+# def home():
+#     return "Home"
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# GET ROUTE
+@app.route("/get-user/<user_id>")
+def get_user(user_id):
+    user_data = {
+        "user_id": user_id,
+        "name": "John Doe",
+        "email": "john.doe@example.com"
+    }
+
+    extra = request.args.get("extra")
+    if extra:
+        user_data["extra"] = extra
+
+    return jsonify(user_data), 200
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
